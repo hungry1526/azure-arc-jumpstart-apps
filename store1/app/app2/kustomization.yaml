@@ -1,0 +1,10 @@
+bases:
+ - ../../base
+
+namesuffix: -cv-app-2
+
+configMapGenerator:
+- name: configmapapp2
+  namespace: hello-arc
+  files:
+  - config
