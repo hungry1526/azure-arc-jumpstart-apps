@@ -4,7 +4,7 @@ bases:
 namesuffix: -cv-app-1
 
 configMapGenerator:
-- name: configmap
+- name: configmapapp1
   namespace: hello-arc
   files:
   - config
