@@ -1,14 +1,22 @@
-FROM ubuntu
-MAINTAINER Kimbro Staken
+FROM komljen/php-apache
+MAINTAINER Alen Komljen <alen.komljen@live.com>
 
-RUN apt-get install -y software-properties-common python
-RUN add-apt-repository ppa:chris-lea/node.js
-RUN echo "deb http://us.archive.ubuntu.com/ubuntu/ precise universe" >> /etc/apt/sources.list
-RUN apt-get update
-RUN apt-get install -y nodejs
-#RUN apt-get install -y nodejs=0.6.12~dfsg1-1ubuntu1
-RUN mkdir /var/www
+ENV WP_PASS aeshiethooghahtu4Riebooquae6Ithe
+ENV WP_USER wordpress
+ENV WP_DB wordpress
+ENV APP_ROOT /var/www/html
 
-ADD app.js /var/www/app.js
+ADD http://wordpress.org/latest.tar.gz wordpress.tar.gz
 
-CMD ["/usr/bin/node", "/var/www/app.js"] 
+RUN \
+  tar xzf wordpress.tar.gz -C ${APP_ROOT} --strip-components 1 && \
+  rm wordpress.tar.gz
+
+COPY start.sh start.sh
+
+VOLUME ["$APP_ROOT"]
+
+RUN rm /usr/sbin/policy-rc.d
+CMD ["/start.sh"]
+
+EXPOSE 80
